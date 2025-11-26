@@ -20,6 +20,26 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Define product flavors
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationId = "com.navigation.live.NoteMaster"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue("string", "app_name", "NoteMaster Dev")
+            buildConfigField("Boolean", "IS_DEV", "true")
+        }
+        create("production") {
+            dimension = "environment"
+            applicationId = "com.navigation.live.NoteMaster"
+            resValue("string", "app_name", "NoteMaster")
+            buildConfigField("Boolean", "IS_DEV", "false")
+        }
+    }
+
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,6 +58,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -50,7 +71,7 @@ dependencies {
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    
+
     // Compose BOM - manages all Compose library versions
     implementation(platform(libs.androidx.compose.bom))
 
@@ -65,11 +86,11 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    
+
     // Hilt - Only for Application class (@HiltAndroidApp)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
