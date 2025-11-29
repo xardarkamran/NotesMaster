@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.common.utilz
+package com.navigation.live.presentation.ui.shared.utilz
 
 object ColorPalette {
     val color = listOf(

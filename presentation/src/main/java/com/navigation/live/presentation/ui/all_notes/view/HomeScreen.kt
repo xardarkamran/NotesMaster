@@ -1,6 +1,5 @@
-package com.navigation.live.presentation.ui.screen
+package com.navigation.live.presentation.ui.all_notes.view
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -11,13 +10,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,10 +38,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.navigation.live.presentation.common.enum.SortType
-import com.navigation.live.presentation.ui.component.NoteCard
-import com.navigation.live.presentation.ui.viewmodel.NotesListViewModel
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import com.navigation.live.presentation.ui.shared.enum.SortType
+import com.navigation.live.presentation.ui.shared.component.NoteCard
+import com.navigation.live.presentation.ui.all_notes.intent.NotesListIntent
+import com.navigation.live.presentation.ui.all_notes.view_model.NotesListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -57,8 +55,11 @@ fun HomeScreen(
         mutableStateOf(false)
     }
 
-    //Refresh notes when returning to this screen
-    LaunchedEffect(Unit) { }
+    // Send LoadNotes Intent when screen is first displayed
+    LaunchedEffect(Unit) {
+        viewModel.processIntent(NotesListIntent.FetchAllNotes)
+    }
+
     Scaffold(
         snackbarHost = {},
         topBar = {
@@ -70,7 +71,7 @@ fun HomeScreen(
                             onClick = { showSortMenu = true }
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Sort,
+                                imageVector = Icons.AutoMirrored.Filled.Sort,
                                 contentDescription = ""
                             )
                         }
@@ -83,7 +84,7 @@ fun HomeScreen(
                                 DropdownMenuItem(
                                     text = { Text(text = sortType.name) },
                                     onClick = {
-                                        viewModel.onSortTypeChange(sortType)
+                                        viewModel.processIntent(NotesListIntent.SortChanged(sortType = sortType))
                                         showSortMenu = false
                                     }
                                 )
@@ -111,7 +112,6 @@ fun HomeScreen(
 
             //Notes grid
             if (uiState.list.isEmpty() && !uiState.isLoading) {
-                Log.d("NotesViewModel", "empty list ${uiState.list.toString()}")
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center,
@@ -131,7 +131,6 @@ fun HomeScreen(
                         .fillMaxSize()
                         .padding(horizontal = 10.dp)
                 ) {
-                    Log.d("NotesViewModel", "home list ${uiState.list.toString()}")
                     items(
                         items = uiState.list,
                         key = {
@@ -146,7 +145,9 @@ fun HomeScreen(
                             NoteCard(
                                 note = note,
                                 onNoteClick = { addNotesClick() },
-                                onDeleteClick = { viewModel.deleteNote(note) },
+                                onDeleteClick = {
+                                    viewModel.processIntent(NotesListIntent.DeleteNotes(note))
+                                },
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }

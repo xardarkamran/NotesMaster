@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.screen
+package com.navigation.live.presentation.ui.add_note.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,10 +25,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.navigation.live.presentation.ui.component.ColorPicker
-import com.navigation.live.presentation.ui.component.DescriptionTextField
-import com.navigation.live.presentation.ui.component.TitleTextField
-import com.navigation.live.presentation.ui.viewmodel.AddNoteViewModel
+import com.navigation.live.presentation.ui.shared.component.ColorPicker
+import com.navigation.live.presentation.ui.shared.component.DescriptionTextField
+import com.navigation.live.presentation.ui.shared.component.TitleTextField
+import com.navigation.live.presentation.ui.add_note.view_model.AddNoteViewModel
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)

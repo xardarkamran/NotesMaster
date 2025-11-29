@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.viewmodel
+package com.navigation.live.presentation.ui.add_note.view_model
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.navigation.live.domain.model.Note
 import com.navigation.live.domain.use_cases.AddNoteUseCase
 import com.navigation.live.domain.use_cases.UpdateNoteUseCase
-import com.navigation.live.presentation.common.utilz.ColorPalette
-import com.navigation.live.presentation.ui.state.AddNoteUiState
+import com.navigation.live.presentation.ui.shared.utilz.ColorPalette
+import com.navigation.live.presentation.ui.add_note.state.AddNoteUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,6 @@ class AddNoteViewModel @Inject constructor(
 
     private val noteId: Int? = savedStateHandle.get<Int>("noteId")
     private val noteColor: Int? = savedStateHandle.get<Int>("noteColor")
-
 
     private var _uiState = MutableStateFlow(
         AddNoteUiState(

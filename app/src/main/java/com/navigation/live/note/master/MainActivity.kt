@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.navigation.live.presentation.ui.navigation.AppNavigation
-import com.navigation.live.presentation.ui.theme.NoteMasterTheme
+import com.navigation.live.presentation.ui.shared.navigation.AppNavigation
+import com.navigation.live.presentation.ui.shared.theme.NoteMasterTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,7 +36,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    com.navigation.live.presentation.ui.theme.NoteMasterTheme {
+    NoteMasterTheme {
         Greeting("Android")
     }
 }

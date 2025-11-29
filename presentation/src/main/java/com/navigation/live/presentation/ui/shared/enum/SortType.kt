@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.common.enum
+package com.navigation.live.presentation.ui.shared.enum
 
 enum class SortType {
     LATEST,

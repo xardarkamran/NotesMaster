@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.theme
+package com.navigation.live.presentation.ui.shared.theme
 
 import android.app.Activity
 import android.os.Build

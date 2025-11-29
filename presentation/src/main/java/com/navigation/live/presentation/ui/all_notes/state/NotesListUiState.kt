@@ -1,7 +1,7 @@
-package com.navigation.live.presentation.ui.state
+package com.navigation.live.presentation.ui.all_notes.state
 
 import com.navigation.live.domain.model.Note
-import com.navigation.live.presentation.common.enum.SortType
+import com.navigation.live.presentation.ui.shared.enum.SortType
 
 data class NotesListUiState(
     val list: List<Note> = emptyList(),

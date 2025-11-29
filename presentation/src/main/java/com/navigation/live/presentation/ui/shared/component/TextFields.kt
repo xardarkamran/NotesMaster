@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.component
+package com.navigation.live.presentation.ui.shared.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn

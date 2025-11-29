@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.navigation
+package com.navigation.live.presentation.ui.shared.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,8 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.navigation.live.presentation.ui.screen.AddNotesScreen
-import com.navigation.live.presentation.ui.screen.HomeScreen
+import com.navigation.live.presentation.ui.add_note.view.AddNotesScreen
+import com.navigation.live.presentation.ui.all_notes.view.HomeScreen
 
 sealed class Screen(
     val route: String

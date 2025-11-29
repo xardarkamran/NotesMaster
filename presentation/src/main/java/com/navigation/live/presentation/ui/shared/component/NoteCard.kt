@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.component
+package com.navigation.live.presentation.ui.shared.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.navigation.live.domain.model.Note
-import com.navigation.live.presentation.common.utilz.formatTimestamp
+import com.navigation.live.presentation.ui.shared.utilz.formatTimestamp
 
 @Composable
 fun NoteCard(

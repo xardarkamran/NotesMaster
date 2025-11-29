@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.component
+package com.navigation.live.presentation.ui.shared.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.navigation.live.presentation.common.utilz.ColorPalette
+import com.navigation.live.presentation.ui.shared.utilz.ColorPalette
 
 @Composable
 fun ColorPicker(

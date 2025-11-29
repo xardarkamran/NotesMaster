@@ -1,6 +1,6 @@
-package com.navigation.live.presentation.ui.state
+package com.navigation.live.presentation.ui.add_note.state
 
-import com.navigation.live.presentation.common.utilz.ColorPalette
+import com.navigation.live.presentation.ui.shared.utilz.ColorPalette
 
 data class AddNoteUiState(
     val title: String = "",

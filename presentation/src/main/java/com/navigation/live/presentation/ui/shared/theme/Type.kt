@@ -1,4 +1,4 @@
-package com.navigation.live.presentation.ui.theme
+package com.navigation.live.presentation.ui.shared.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
