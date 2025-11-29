@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.navigation.live.domain.model.Note
 import com.navigation.live.domain.use_cases.AddNoteUseCase
 import com.navigation.live.domain.use_cases.UpdateNoteUseCase
+import com.navigation.live.presentation.common.utilz.ColorPalette
 import com.navigation.live.presentation.ui.state.AddNoteUiState
-import com.navigation.live.presentation.ui.state.ColorPalette
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -47,7 +47,7 @@ class AddNoteViewModel @Inject constructor(
 
     fun onColorChange(color: Int) {
         _uiState.update {
-            it.copy(selectedColor = color, error = null)
+            it.copy(selectedColor = color)
         }
     }
 

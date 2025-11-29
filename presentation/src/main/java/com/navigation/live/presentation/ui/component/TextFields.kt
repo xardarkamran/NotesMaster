@@ -2,8 +2,9 @@ package com.navigation.live.presentation.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,21 +14,25 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TitleTextField(
     title: String,
+    isError: Boolean = false,
     onTitleChange: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         value = title,
         onValueChange = onTitleChange,
         placeholder = { Text("Title") },
         singleLine = true,
+        isError = isError,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
             errorContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
+            errorIndicatorColor = MaterialTheme.colorScheme.error
         )
     )
 }
@@ -35,9 +40,10 @@ fun TitleTextField(
 @Composable
 fun DescriptionTextField(
     title: String,
+    isError: Boolean = false,
     onDescriptionChange: (String) -> Unit
 ) {
-    TextField(
+    OutlinedTextField(
         value = title,
         onValueChange = onDescriptionChange,
         modifier = Modifier
@@ -46,14 +52,17 @@ fun DescriptionTextField(
         placeholder = {
             Text("Description")
         },
+        isError = isError,
         maxLines = Int.MAX_VALUE,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
             errorContainerColor = Color.Transparent,
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+            disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
+            errorIndicatorColor = MaterialTheme.colorScheme.error
         )
     )
 }
