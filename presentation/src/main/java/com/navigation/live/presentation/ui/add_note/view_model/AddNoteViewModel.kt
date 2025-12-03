@@ -6,8 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.navigation.live.domain.model.Note
 import com.navigation.live.domain.use_cases.AddNoteUseCase
 import com.navigation.live.domain.use_cases.UpdateNoteUseCase
-import com.navigation.live.presentation.ui.shared.utilz.ColorPalette
+import com.navigation.live.presentation.ui.add_note.intent.AddNotesIntent
 import com.navigation.live.presentation.ui.add_note.state.AddNoteUiState
+import com.navigation.live.presentation.ui.shared.utilz.ColorPalette
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,37 +33,26 @@ class AddNoteViewModel @Inject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
-    fun onTitleChange(title: String) {
-        _uiState.update {
-            it.copy(title = title, error = null)
+
+    fun handleIntent(addNotesIntent: AddNotesIntent) {
+        when (addNotesIntent) {
+            is AddNotesIntent.NotesSaved -> handleSaveNote()
+            is AddNotesIntent.ResetSavedState -> handleResetSavedState()
+            is AddNotesIntent.OnTitleChanged -> handleTitleChanged(addNotesIntent.title)
+            is AddNotesIntent.OnDescriptionChanged -> handleDescriptionChanged(addNotesIntent.des)
+            is AddNotesIntent.OnColorChanged -> handleColorChanged(addNotesIntent.color)
         }
+
     }
 
-    fun onDescriptionChange(des: String) {
-        _uiState.update {
-            it.copy(content = des, error = null)
-        }
-    }
-
-    fun onColorChange(color: Int) {
-        _uiState.update {
-            it.copy(selectedColor = color)
-        }
-    }
-
-    fun saveNote() {
+    private fun handleSaveNote() {
         val currentState = _uiState.value
         if (currentState.title.isBlank() || currentState.content.isBlank()) {
-            _uiState.update {
-                it.copy(error = "Title and content could not be empty")
-            }
+            _uiState.update { it.copy(error = "Title and content could not be empty") }
             return
         }
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(isLoading = true)
-            }
-
+            _uiState.update { it.copy(isLoading = true) }
             try {
                 val note = Note(
                     id = noteId,
@@ -71,31 +61,21 @@ class AddNoteViewModel @Inject constructor(
                     timestamp = currentState.timeStamp,
                     color = currentState.selectedColor
                 )
-
                 if (noteId == null) {
-                    addNoteUseCase(note)
+                    addNoteUseCase.invoke(note)
                 } else {
-                    updateNoteUseCase(note)
+                    updateNoteUseCase.invoke(note)
                 }
                 _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        isNoteSaved = true
-                    )
+                    it.copy(isLoading = false, isNoteSaved = true)
                 }
-
             } catch (e: Exception) {
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = e.message ?: "Error saving note"
-                    )
-                }
+                _uiState.update { it.copy(error = e.message ?: "Error saving note") }
             }
         }
     }
 
-    fun resetSavedState() {
+    private fun handleResetSavedState() {
         _uiState.update {
             it.copy(
                 isNoteSaved = false
@@ -103,5 +83,26 @@ class AddNoteViewModel @Inject constructor(
         }
     }
 
+    private fun handleTitleChanged(title: String) {
+        _uiState.update {
+            it.copy(
+                title = title
+            )
+        }
+    }
+
+    private fun handleDescriptionChanged(des: String) {
+        _uiState.update {
+            it.copy(content = des)
+        }
+    }
+
+    private fun handleColorChanged(color: Int) {
+        _uiState.update {
+            it.copy(
+                selectedColor = color
+            )
+        }
+    }
 
 }

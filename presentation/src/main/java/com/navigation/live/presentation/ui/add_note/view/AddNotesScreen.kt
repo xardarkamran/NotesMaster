@@ -25,10 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.navigation.live.presentation.ui.add_note.intent.AddNotesIntent
+import com.navigation.live.presentation.ui.add_note.view_model.AddNoteViewModel
 import com.navigation.live.presentation.ui.shared.component.ColorPicker
 import com.navigation.live.presentation.ui.shared.component.DescriptionTextField
 import com.navigation.live.presentation.ui.shared.component.TitleTextField
-import com.navigation.live.presentation.ui.add_note.view_model.AddNoteViewModel
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +44,7 @@ fun AddNotesScreen(
     LaunchedEffect(uiState.isNoteSaved) {
         if (uiState.isNoteSaved) {
             delay(150)
-            noteViewModel.resetSavedState()
+            noteViewModel.handleIntent(AddNotesIntent.ResetSavedState)
             onNavigationBack()
         }
     }
@@ -75,7 +76,9 @@ fun AddNotesScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = noteViewModel::saveNote,
+                        onClick = {
+                            noteViewModel.handleIntent(AddNotesIntent.NotesSaved)
+                        },
                         enabled = !uiState.isLoading
                     ) {
                         Icon(
@@ -97,14 +100,14 @@ fun AddNotesScreen(
                 title = uiState.title,
                 isError = uiState.error != null
             ) {
-                noteViewModel.onTitleChange(it)
+                noteViewModel.handleIntent(AddNotesIntent.OnTitleChanged(title = it))
             }
             Spacer(modifier = Modifier.height(5.dp))
             DescriptionTextField(
                 title = uiState.content,
                 isError = uiState.error != null
             ) {
-                noteViewModel.onDescriptionChange(it)
+                noteViewModel.handleIntent(AddNotesIntent.OnDescriptionChanged(des = it))
             }
             Spacer(modifier = Modifier.height(10.dp))
             // Color Picker
@@ -115,7 +118,9 @@ fun AddNotesScreen(
                 )
             ColorPicker(
                 selectedColor = uiState.selectedColor,
-                onColorSelected = noteViewModel::onColorChange
+                onColorSelected = {
+                    noteViewModel.handleIntent(AddNotesIntent.OnColorChanged(color = it))
+                }
             )
 
             //Error message
