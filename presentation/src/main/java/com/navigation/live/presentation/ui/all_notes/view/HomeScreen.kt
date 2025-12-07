@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.navigation.live.domain.model.Note
 import com.navigation.live.presentation.ui.shared.enum.SortType
 import com.navigation.live.presentation.ui.shared.component.NoteCard
 import com.navigation.live.presentation.ui.all_notes.intent.NotesListIntent
@@ -47,7 +48,8 @@ import com.navigation.live.presentation.ui.all_notes.view_model.NotesListViewMod
 @Composable
 fun HomeScreen(
     viewModel: NotesListViewModel = hiltViewModel(),
-    addNotesClick: () -> Unit
+    addNotesClick: () -> Unit,
+    onNoteClick:(Note)->Unit
 ) {
 
     val uiState by viewModel.uiStates.collectAsState()
@@ -144,7 +146,7 @@ fun HomeScreen(
                         ) {
                             NoteCard(
                                 note = note,
-                                onNoteClick = { addNotesClick() },
+                                onNoteClick = { onNoteClick(note) },
                                 onDeleteClick = {
                                     viewModel.processIntent(NotesListIntent.DeleteNotes(note))
                                 },
@@ -162,5 +164,5 @@ fun HomeScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen { }
+
 }

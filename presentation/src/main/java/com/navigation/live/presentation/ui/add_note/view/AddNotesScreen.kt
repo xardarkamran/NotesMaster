@@ -40,11 +40,16 @@ fun AddNotesScreen(
 ) {
     val uiState by noteViewModel.uiState.collectAsState()
 
+    // send load note intent
+    LaunchedEffect(Unit) {
+        noteViewModel.processIntent(AddNotesIntent.LoadNote)
+    }
+
     // Handle navigation back after saving
     LaunchedEffect(uiState.isNoteSaved) {
         if (uiState.isNoteSaved) {
             delay(150)
-            noteViewModel.handleIntent(AddNotesIntent.ResetSavedState)
+            noteViewModel.processIntent(AddNotesIntent.ResetSavedState)
             onNavigationBack()
         }
     }
@@ -77,7 +82,7 @@ fun AddNotesScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            noteViewModel.handleIntent(AddNotesIntent.NotesSaved)
+                            noteViewModel.processIntent(AddNotesIntent.NotesSaved)
                         },
                         enabled = !uiState.isLoading
                     ) {
@@ -100,14 +105,14 @@ fun AddNotesScreen(
                 title = uiState.title,
                 isError = uiState.error != null
             ) {
-                noteViewModel.handleIntent(AddNotesIntent.OnTitleChanged(title = it))
+                noteViewModel.processIntent(AddNotesIntent.OnTitleChanged(title = it))
             }
             Spacer(modifier = Modifier.height(5.dp))
             DescriptionTextField(
                 title = uiState.content,
                 isError = uiState.error != null
             ) {
-                noteViewModel.handleIntent(AddNotesIntent.OnDescriptionChanged(des = it))
+                noteViewModel.processIntent(AddNotesIntent.OnDescriptionChanged(des = it))
             }
             Spacer(modifier = Modifier.height(10.dp))
             // Color Picker
@@ -119,7 +124,7 @@ fun AddNotesScreen(
             ColorPicker(
                 selectedColor = uiState.selectedColor,
                 onColorSelected = {
-                    noteViewModel.handleIntent(AddNotesIntent.OnColorChanged(color = it))
+                    noteViewModel.processIntent(AddNotesIntent.OnColorChanged(color = it))
                 }
             )
 

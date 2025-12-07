@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.navigation.live.domain.model.Note
 import com.navigation.live.domain.use_cases.AddNoteUseCase
+import com.navigation.live.domain.use_cases.GetNoteByIdUseCase
 import com.navigation.live.domain.use_cases.UpdateNoteUseCase
 import com.navigation.live.presentation.ui.add_note.intent.AddNotesIntent
 import com.navigation.live.presentation.ui.add_note.state.AddNoteUiState
@@ -20,6 +21,7 @@ import javax.inject.Inject
 class AddNoteViewModel @Inject constructor(
     private val addNoteUseCase: AddNoteUseCase,
     private val updateNoteUseCase: UpdateNoteUseCase,
+    private val getNoteByIdUseCase: GetNoteByIdUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -33,9 +35,11 @@ class AddNoteViewModel @Inject constructor(
     )
     val uiState = _uiState.asStateFlow()
 
-
-    fun handleIntent(addNotesIntent: AddNotesIntent) {
+    fun processIntent(addNotesIntent: AddNotesIntent) {
         when (addNotesIntent) {
+            is AddNotesIntent.LoadNote -> {
+                handleLoadNote()
+            }
             is AddNotesIntent.NotesSaved -> handleSaveNote()
             is AddNotesIntent.ResetSavedState -> handleResetSavedState()
             is AddNotesIntent.OnTitleChanged -> handleTitleChanged(addNotesIntent.title)
@@ -43,6 +47,44 @@ class AddNoteViewModel @Inject constructor(
             is AddNotesIntent.OnColorChanged -> handleColorChanged(addNotesIntent.color)
         }
 
+    }
+
+    private fun handleLoadNote() {
+        if (noteId == null) return
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+
+            try {
+                val note = getNoteByIdUseCase.invoke(noteId)
+                if (note != null) {
+                    _uiState.update {
+                        it.copy(
+                            title = note.title,
+                            content = note.content,
+                            selectedColor = note.color,
+                            timeStamp = note.timestamp,
+                            isLoading = false
+                        )
+                    }
+
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = "Note not found"
+                        )
+                    }
+                }
+
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = e.message ?: "Error loading note"
+                    )
+                }
+            }
+        }
     }
 
     private fun handleSaveNote() {
