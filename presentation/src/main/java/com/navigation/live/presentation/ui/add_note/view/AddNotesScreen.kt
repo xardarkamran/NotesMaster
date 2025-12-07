@@ -66,7 +66,7 @@ fun AddNotesScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "New Note"
+                        text = if (uiState.title.isEmpty()) "New Note" else "Edit Note"
                     )
                 },
                 navigationIcon = {
