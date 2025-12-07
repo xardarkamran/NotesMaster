@@ -10,42 +10,37 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 /**
  * Hilt module for providing use case dependencies.
  * Use cases are provided here since they are used by ViewModels in the presentation layer.
- */
+ * 
+*/
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
 
     @Provides
-    @Singleton
     fun provideAddNoteUseCase(repository: NoteRepository): AddNoteUseCase {
         return AddNoteUseCase(repository)
     }
 
     @Provides
-    @Singleton
     fun provideDeleteNoteUseCase(repository: NoteRepository): DeleteNoteUseCase {
         return DeleteNoteUseCase(repository)
     }
 
     @Provides
-    @Singleton
     fun provideUpdateNoteUseCase(repository: NoteRepository): UpdateNoteUseCase {
         return UpdateNoteUseCase(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetNotesUseCase(repository: NoteRepository): GetNotesUseCase {
         return GetNotesUseCase(repository)
     }
 
     @Provides
-    @Singleton
     fun provideGetNoteByIdUseCase(repository: NoteRepository): GetNoteByIdUseCase {
         return GetNoteByIdUseCase(repository)
     }
