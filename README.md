@@ -7,12 +7,12 @@ A modern Android note-taking application built with **Clean Architecture**, **MV
 NoteMaster is an Android application demonstrating modern development practices. The project follows **Clean Architecture** principles with a multi-module structure and implements **MVI architecture** for predictable state management. Built entirely with **Jetpack Compose** and **Material 3**.
 
 ## 📱 Screenshots
-<div align="center">
+ 
   <img src="https://github.com/user-attachments/assets/ca4d225c-eff3-4f4e-a95c-857347dc9673" alt="All Notes" width="200"/>
   <img src="https://github.com/user-attachments/assets/3e94e554-c987-41ea-b3d7-06df6a77738f" alt="Filter Notes" width="200"/>
   <img src="https://github.com/user-attachments/assets/2f50aa79-57d3-487e-9c3a-a05411152b44" alt="Add Notes" width="200"/>
   <img src="https://github.com/user-attachments/assets/f13c9f04-9924-40ef-878f-6d7fca6f36c3" alt="Edit note" width="200"/>
-</div>
+ 
 
 ## ✨ Features
 
